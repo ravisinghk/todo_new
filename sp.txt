@@ -1,0 +1,1 @@
+<TouchableOpacity key={index} onPress={() => completeTask(index)}>
