@@ -1,6 +1,7 @@
 import react, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+// import Swipeable from "react-native-gesture-handler/Swipeable";
 import {
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -22,6 +23,7 @@ export default function App() {
   const [taskItems, setTaskItems] = useState([]);
   const [completeItems, setCompleteItems] = useState([]);
   const [section, setSection] = useState(1);
+  const [editValue, setEditValue] = useState();
 
   const [edit, setEdit] = useState(false);
 
@@ -31,6 +33,7 @@ export default function App() {
     Keyboard.dismiss();
     setTaskItems([...taskItems, task]);
     setTask(null);
+    setEditValue(null);
     // setEdit(false);
   };
 
@@ -40,17 +43,6 @@ export default function App() {
     } else {
       setSection(0);
     }
-  };
-
-  const handleEdit = (index) => {
-    setEdit(true);
-    // Keyboard.dismiss();
-    let itemsCopy = [...taskItems];
-    itemsCopy[index] = task;
-    console.log(itemsCopy);
-    setTaskItems(itemsCopy);
-    setTask(null);
-    setEdit(false);
   };
 
   // const completeTask = (index) => {
@@ -110,31 +102,25 @@ export default function App() {
       <View style={styles.mainList}>
         {section == 1 ? (
           <PTasks
-            // actionDelete={() => {
-            //   deleteTask();
-            // }}
+            task={task}
+            setTask={setTask}
             taskItems={taskItems}
             setTaskItems={setTaskItems}
             completeItems={completeItems}
             setCompleteItems={setCompleteItems}
             edit={edit}
             setEdit={setEdit}
-            actionEdit={() => {
-              handleEdit();
-            }}
+            editValue={editValue}
+            setEditValue={setEditValue}
           />
         ) : (
           <CTasks
-            // action={() => {
-            //   deleteTask();
-            // }}
             taskItems={taskItems}
             setTaskItems={setTaskItems}
             completeItems={completeItems}
             setCompleteItems={setCompleteItems}
           />
         )}
-        {/* <PTasks action={() => {deleteTask()}} taskItems={taskItems} setTaskItems={setTaskItems}/> */}
       </View>
 
       <KeyboardAvoidingView
@@ -146,8 +132,8 @@ export default function App() {
           placeholder={"Write a Task"}
           value={task}
           onChangeText={(text) => setTask(text)}
-          defaultValue={edit ? "To edit" : ""}
-        />
+          defaultValue={edit ? editValue : ""} // here edit state does not hold importance...delete clear edit state from project later
+        ></TextInput>
 
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
@@ -218,6 +204,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
+  emptyMainList: {},
   container: {
     flex: 1,
     backgroundColor: colors.back,

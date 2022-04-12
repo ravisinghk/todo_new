@@ -29,6 +29,20 @@ const PTasks = (props) => {
     props.setTaskItems(itemsCopy);
   };
 
+  const handleEdit = (index) => {
+    props.setEdit(true);
+    // Keyboard.dismiss();
+    let itemsCopy = [...props.taskItems];
+    const valueToEdit = itemsCopy[index];
+    props.setEditValue(valueToEdit);
+    console.log("Value to Edit: ", valueToEdit);
+    console.log("editValue: ", props.editValue);
+    itemsCopy.splice(index, 1);
+    props.setTaskItems(itemsCopy);
+    // props.setEdit(false);
+    // props.setEditValue("");
+  };
+
   return (
     <View style={styles.container}>
       {/* Added this scroll view to enable scrolling when list gets longer than the page */}
@@ -43,6 +57,8 @@ const PTasks = (props) => {
           <View style={styles.items}>
             {/* All the tasks will come here */}
             {props.taskItems.map((item, index) => {
+              console.log("index: ", index);
+              const num = 12;
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -51,7 +67,8 @@ const PTasks = (props) => {
                 >
                   <Task
                     key={index}
-                    actionEditToTask={props.actionEdit}
+                    // actionEditToTask={props.actionEdit(index)}
+                    actionEditToTask={() => handleEdit(index)}
                     actionDelete={() => deleteTask(index)}
                     actionComplete={() => completeTask(index)}
                     text={item}

@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from "react-native";
 import colors from "../config/colors";
 
 const Task = (props) => {
+  // console.log("key in Task: ", props.key);
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
@@ -23,6 +24,7 @@ const Task = (props) => {
 
         <Entypo
           onPress={() => props.actionEditToTask(props.key)}
+          // onPress={() => console.log(props.key)}
           style={styles.circularEdit}
           name="edit"
           size={22}
