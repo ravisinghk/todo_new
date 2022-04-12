@@ -1,1 +1,4 @@
 <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+<View >
+              <Image source = {require('./assets/ptasks.png')} />
+              </View>

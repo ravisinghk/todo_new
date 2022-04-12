@@ -26,7 +26,11 @@ export default function App() {
   const [editValue, setEditValue] = useState();
 
   const [edit, setEdit] = useState(false);
-
+  const isPTasksEmpty = () => {
+    if (taskItems.length === 0) {
+      return true;
+    }
+  };
   const handleAddTask = () => {
     // console.log(task);
 
@@ -255,5 +259,10 @@ const styles = StyleSheet.create({
 
     marginLeft: 7,
   },
-  addText: {},
+  addText: {
+    // fontWeight: "bold",
+    fontSize: 20,
+    color: "black",
+    opacity: 0.7,
+  },
 });

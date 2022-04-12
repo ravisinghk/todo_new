@@ -9,6 +9,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import colors from "../config/colors";
 import Task from "./Task";
@@ -31,21 +32,31 @@ const CTasks = (props) => {
       >
         {/* Today's Tasks */}
         <View style={styles.textWrapper}>
-          <View style={styles.items}>
-            {/* All the tasks will come here */}
-            {props.completeItems.map((item, index) => {
-              return (
-                <TouchableOpacity>
-                  <CTask
-                    key={index}
-                    actionDelete={() => deleteTask(index)}
-                    text={item}
-                  />
-                  {/* <Text key={index}>{item}</Text> */}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+          {props.completeItems.length === 0 ? (
+            <View style={styles.imageView}>
+              <Image
+                style={styles.image}
+                source={require("../assets/ctasks.png")}
+              />
+              <Text style={styles.imageText}>No Completed Tasks</Text>
+            </View>
+          ) : (
+            <View style={styles.items}>
+              {/* All the tasks will come here */}
+              {props.completeItems.map((item, index) => {
+                return (
+                  <TouchableOpacity>
+                    <CTask
+                      key={index}
+                      actionDelete={() => deleteTask(index)}
+                      text={item}
+                    />
+                    {/* <Text key={index}>{item}</Text> */}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -60,6 +71,22 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 1,
     justifyContent: "flex-start",
+  },
+  imageView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    maxHeight: 500,
+  },
+  image: {
+    height: 300,
+    width: 300,
+    marginTop: 50,
+  },
+  imageText: {
+    fontWeight: "bold",
+    opacity: 0.3,
+    fontSize: 17,
   },
   textWrapper: {
     paddingTop: 0,
